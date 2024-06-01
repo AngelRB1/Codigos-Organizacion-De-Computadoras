@@ -1,0 +1,172 @@
+*/ COGIDOS TALLER 3 */
+
+/* CODIGO 1 */
+section .data
+
+;mensaje para cuando el numero es mayor igual a 10
+    msg_greater db "el numero es mayor a 10 ", 0xA
+;Longitud del mensaje "msg_greater"
+    len_msg_greater equ $ - msg_greater
+;Mensaje para cuando el numero es menor a 10
+    msg_lower db "El numero es menor a 10";
+;longitud del mensaje "msg_lower"
+    len_msg_lower equ $ - msg_lower
+    
+section .bss ;seccion de espacion sin utilizar
+    ;variable para almacenar un numero
+    number resd 1
+    
+section .text
+    global_start
+    
+_start:
+
+;Asignar el valor 1 a la variable "number"
+    mov dword [number], 10
+;Cargar el valor de "number" en el registro eax
+    mov eax, dword [number]
+; Comparar el valor de "number" con 10
+    cmp eax, 10
+    
+;Si el numero es menor o igual a 10, imprimir el mensaje "msg_lower"
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_lower ; cargar la direccion del mensaje "msg_lower" en ecx.
+    int 0x80; Ejecutar la funcion de interrupcion para imprimir el mensaje
+;Saltar a la etiqueta "end_if_else" para finalizar el programa
+    jmp end_if_else
+    
+eater_than_or_qual:
+;si el numero es mayor o igual 1 10, imprimir el mensaje "msg_greater"
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_greater ;cargar la direccion del mensaje "msg_greater" en ecx
+    mov edx, len_msg_greater ;cargar la longitud del mensaje "msg_greater" en edx
+    int 0x80
+
+end_if_else:
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+/*  CODIGO 2 */
+
+section.data
+
+;Mensaje para cuando  el numero es mayor o igual a 10
+    msg_greater db "El numero es mayor o igual a 10", 0xA
+
+;Longitud del mensaje "msg_greater"
+    len_msg_greater equ $ - msg_greater
+
+;Mensaje para cuando es numero es menor a 10
+msg_lower db "El numero es menor a 10", 0xA
+
+;Longitud del mensaje "msg_lower"
+len_msg_lower equ $ - msg_lower
+
+section .bss ;seccion de espacion sin inicializar
+    number resd 1; Variable para almacenar un número
+
+section .text
+    global_start
+
+_start:
+;Asignar el valor de 1 a la varible "number"
+    mov dword [number], 1
+;Cargar el valor "number" en el registro eax
+    mov eax, dword [number]
+
+;Comparar el valor de "number" con 10
+cmp eax, 10
+
+;si el numero es menor o igual a 10, saltar al la etiqueta "else"
+jle else
+
+;Si el numero es mayor que 10, imprimir el mensaje "msg_greater"
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_greater ;Cargar la direccion del mensaje "msg_greater"
+    mov edx, len_msg_greater ;Cargar la logitud del mensaje "msg_greater"
+    int 0x80 ;Ejecutar la funcion de interrupcion para imprimir el mensaje
+    
+;Saltar a la etiqueta "end_if_else" para finalizar el programa
+jmp end_if_else
+
+else:
+
+;Si el numero es menor o igual a 10, imprimir el mensaje "msg_lower"
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_lower ;Cargar la direccion del mensaje "msg_lower"
+    mov edx, len_msg_lower ;Cargar la logitud del mensaje "msg_lower"
+    int 0x80 ;Ejecutar la funcion de interrupcion para imprimir el mensaje
+
+end_if_else:
+
+;Preparar el codigo de salida exitoso
+ mov eax, 1
+
+ ;Limpiar el registro ebx
+ xor ebx, ebx
+
+ ;Terminar el programa con el codigo de salida 0
+ int 0x80
+
+ /* CODIGO 3 */
+
+section .data
+Mensaje para cuando es numero es menor a 10
+    msg_lower db "El numero es menor a 10", 0xA
+    
+;Longitud del mensaje "msg_lower"
+    len_msg_lower equ $ - msg_lower
+
+;Mensaje para cuando  el numero es mayor o igual a 10
+    msg_greater db "El numero es mayor o igual a 10", 0xA
+
+;Longitud del mensaje "msg_greater"
+    len_msg_greater equ $ - msg_greater
+
+section .bss
+;variable para almacenar un numero
+    number resd 1
+
+%macro imprimir_mensaje 2 ;Macro para imprimir un mensaje
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, %1 ;Cargar la direccion del mensaje en el registro ecx
+    mov edx, %2 ;Cargar la longitud del mensaje en el regisro edx
+    int 0x80 ; Ejecutar la interrupcion para imprimir el mensaje
+%endmacro
+
+section .text
+    global_start
+
+_start:
+;Asignar el valor 1 a la variable "number"
+    mov dword [number], 1
+;Cargar el valor de "number" en el registro eax
+    mov eax, dword [number]
+
+;Comparar el valor de "number" con 10
+    cmp eax, 10
+
+;Si el numero es mayor  o igual a 10, saltar la etiqueta "greater_than_or_equal"
+    jge greater_than_or_equal
+;Si el numero es menor a 10, imprimir el mensaje "msg_lower"
+    imprimir_mensaje msg_lower, len_msg_lower
+;Saltar la etiqueta "end_if_else" para finalizar el programa
+    jmp end_if_else
+greater_than_or_equal:
+;Si el numero es mayor o igual a 10, Imprimir el mensaje "msg_greater"
+
+end_if_else:
+;Preparar el codigo de salida exitoso
+    mov eax, 1
+;Limpiar el registro ebx
+xor ebx, ebx
+;Terminar el programa con el codigo de salida 0

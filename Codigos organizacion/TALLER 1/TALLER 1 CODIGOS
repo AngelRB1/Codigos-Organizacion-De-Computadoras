@@ -1,0 +1,44 @@
+/* CODIGOS TALLER 1 */
+
+
+/* CODIGO 1 */
+section .data
+    mensaje db 'Hola mundo',0
+    
+section .text
+    global _start
+    
+_start:
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje
+    mov edx, 11
+    int 0x80
+    
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+    
+
+/* CODIGO 2 */
+
+section .data
+    mensaje db 'Organizacion de computadoras',0
+    
+section .text
+    global _start
+    
+_start:
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje
+    mov edx, 30
+    int 0x80
+    
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+    
+    

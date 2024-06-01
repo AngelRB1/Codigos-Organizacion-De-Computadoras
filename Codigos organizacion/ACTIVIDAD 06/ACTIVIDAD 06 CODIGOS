@@ -1,0 +1,66 @@
+*/ COGIDOS ACTIVIDAD 6 */
+
+/* CODIGO 1*/
+section .data
+   num1 db 0x55 ;primer valor de 8 bits
+   num2 db 0xAA ;segundo valor de 8 bits
+   result db 0x00 ;resultado de la operacion
+    
+section .text
+    global _start
+    
+_start:
+    mov al, [num1] ;carga los valores en registros
+    mov bl, [num2]
+    
+    and al, bl ;realiza operacion AND
+    mov [result], al ;Almacena el resultado en result
+    
+exit:
+    mov eax, 1 ; codigo de salida
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+    
+
+/* CODIGO 2 */
+section .data
+   num1 db 0x55 ;primer valor de 8 bits
+   num2 db 0xAA ;segundo valor de 8 bits
+   result db 0x00 ;resultado de la operacion
+    
+section .text
+    global _start
+    
+_start:
+    mov al, [num1] ;carga los valores en registros
+    mov bl, [num2]
+    
+    or al, bl ;realiza operacion OR
+    mov [result], al ;Almacena el resultado en result
+    
+exit:
+    mov eax, 1 ; codigo de salida
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+*/ CODIGO 3 */
+section .data
+   num1 db 0x55 ;primer valor de 8 bits
+   num2 db 0xAA ;segundo valor de 8 bits
+   result db 0x00 ;resultado de la operacion
+    
+section .text
+    global _start
+    
+_start:
+    mov al, [num1] ;carga los valores en registros
+    mov bl, [num2]
+    
+    xor al, bl ;realiza operacion XOR
+    mov [result], al ;Almacena el resultado en result
+    
+exit:
+    mov eax, 1 ; codigo de salida
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+    

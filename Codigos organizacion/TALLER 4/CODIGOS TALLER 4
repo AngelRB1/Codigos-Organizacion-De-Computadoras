@@ -1,0 +1,92 @@
+/* CODIGOS TALLER 4 */
+
+/* CODIGO 1 */
+
+section .data
+	debug_msg db "Debugging message", 0xA ;se declara un mensaje de depuracion como cadena de de bytes
+	debug_len equ $ - debug_msg ;Da la longitud del mensaje debug_msg
+
+section .text
+	global_start ;Se declara la etiqueta como punto de entrada del programa
+
+_start:
+	mov eax, 4 ;Se mueve el valor 4 al registro eax y 4 es el numero de syscall (sys_write)
+	mov ebx, 1 ;Se mueve el valor de 1 al registro ebx y es un descriptor de archivo (stdout)
+	mov ecx,  debug_msg ;Se mueve la dirreccion de debug_msg al registro ecx
+	mov edx, debug_len ;Se mueve longitud de debug_msg al registro edx
+	int 0x80 ;se llama al sistema con una interrupcion y se ejecuta (sys_write) para poder imprimir stdout
+
+	mov eax, 1 ;mueve el valor de 1 al registro eax, que 1 es el  numero de la syscall para (sys_exit)
+	xor ebx, ebx ;Se hace un operacion xor del registro ebx donde se obtiene un 0, dando la salida del programa
+	int 0x80; Interrupcion para invocar la syscall sys_exit y terminar el programa. 
+
+/* CODIGO 2 */
+section .data
+	msg db "Ingresa dos numeros de un digito: ", 0
+	len equ $ -msg
+	result db "El resultado es: ", 0
+	len_result equ $ - result
+
+section .bss
+num1 resb 2
+num2 resb 2
+res resb 1
+
+section .text
+	global_start
+
+_start:
+
+;Escribir el mensaje "Ingresa dos numeros de un digito: " en la salida estandar
+	mov eax, 4
+	mov ebx, 1
+	lea ecx, msg
+	mov edx, len
+	int 0x80
+
+;Leer el primer numero ingresado en la variable num1
+	mov eax, 3
+	mov ebx, 0
+	lea ecx, msg
+	mov edx, len
+	int 0x80
+
+;Leer el segundo numero ingresado en la variable num2
+	mov eax, 3
+	mov ebx, 0
+	lea ecx, msg
+	mov edx, len
+	int 0x80
+;Cargar el primer el numero ingresado en AL y restar '0' para obtener el valor numerico
+	mov al, [num1]
+	sub al. '0'
+;Cargar el segundo numero ingresado en BL y restar '0' para obtener el valor numerico
+ mov bl, [num2]
+ sub bl, '0'
+;Sumar los valores numericos en AL Y BL
+add al, bl
+;Agregar '0' al resultado de la suma para obtener un caracter numerico
+	add al, '0'
+;Guardar el resultado de la suma en la variable res
+	mov [res], al
+
+;Escribir el mensaje "El resultado es:" en la salida estandar
+	mov eax, 4
+	mov ebx, 1
+	lea ecx, result 
+	mov edx, len_result
+	int  0x80
+;Terminar el programa
+	mov eax, 1
+	xor ebx, ebx
+	int 0x80
+
+
+
+
+
+
+
+
+
+

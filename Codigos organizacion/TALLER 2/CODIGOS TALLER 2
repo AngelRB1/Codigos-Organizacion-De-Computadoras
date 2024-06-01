@@ -1,0 +1,155 @@
+*/ COGIDOS TALLER 2 */
+
+/* CODIGO 1*/
+section .data
+   numero1 dd 5
+   numero2 dd 7
+   resultado dd 0
+    
+section .text
+    global _start
+    
+_start:
+    ;se cargar el valor de numero1 en eax
+    mov eax, numero1
+    ;suma el valor de numero2 en eax
+    add eax, numero2
+    ;almacena los resultados
+    mov resultado, eax
+     
+     ;preparar la llamada al sistema exit 
+    mov eax, 1 
+    ;codigo de retorno 0
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+;Funcionamiento: En este modo se utilizo el registro eax
+;para almacenar temporalmente los valores de numero 1 y numero 2
+
+/* CODIGO 2 */
+section .data
+   numero1 dd 5
+   numero2 dd 7
+   resultado dd 0
+    
+section .text
+    global _start
+    
+_start:
+    ;se cargar el valor de 5 en eax
+    mov eax, 5
+    ;suma el valor de 7 en eax
+    add eax, 7
+    ;almacena los resultados
+    mov resultado, eax
+     
+     ;preparar la llamada al sistema exit 
+    mov eax, 1 
+    ;codigo de retorno 0
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+;Funcionamiento: En este modo se cargaron directamente los valores de 5 y 7 en el registro eax
+
+
+*/ CODIGO 3 */
+section .data
+   numero1 dd 5
+   numero2 dd 7
+   resultado dd 0
+    
+section .text
+    global _start
+    
+_start:
+    ;se cargar el valor de numero1 en eax
+    mov eax, numero1
+    ;obtiene el valor almacenado que estaba apuntada a eax
+    mov eax, [eax]
+    ;suma el valor de numero2 en eax
+    add eax, [numero2]
+    ;almacena los resultados
+    mov resultado, eax
+     
+     ;preparar la llamada al sistema exit 
+    mov eax, 1 
+    ;codigo de retorno 0
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+;Funcionamiento: En este modo utiliza un registro para almacenar una dirrecion de memoria y luego accede al contenido de esa direccion de memoria.
+
+*/ CODIGO 4 */
+section .data
+   numero1 dd 5
+   numero2 dd 7
+   resultado dd 0
+    
+section .text
+    global _start
+    
+_start:
+    ;se cargar el valor de numero1 en eax y ebx sirve para ser el indice
+    mov eax, [numero1 + ebx]
+    ;suma el valor de numero2 en eax
+    add eax, [numero2]
+    ;almacena el resultado en la direccion
+    mov [resultado], eax
+     
+     ;preparar la llamada al sistema exit 
+    mov eax, 1 
+    ;codigo de retorno 0
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+;Funcionamiento: En este modo utiliza para acceder a la memoria, donde ebx lo utilice como el registro base para acceder a numero 1, luego suma el valor de numero 2 en eax.
+
+/* CODIGO 5 */
+section .data
+   numero1 dd 5
+   numero2 dd 7
+   resultado dd 0
+    
+section .text
+    global _start
+    
+_start:
+    ;se carga el valor de numero1 en eax y ebx se le agrega un desplazamiento de numero1(5); 
+    mov eax, [ebx + numero1]
+    ;suma el valor de numero2 en eax
+    add eax, [numero2]
+    ;almacena el resultado en la direccion
+    mov [resultado], eax
+     
+     ;preparar la llamada al sistema exit 
+    mov eax, 1 
+    ;codigo de retorno 0
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+;Funcionamiento: En este modo utiliza ebx como registro y numero 1 como dezplazamiento se calcula la direccion de memoria y el valor almacenado en esa direccion se carga en eax.
+
+/* CODIGO 6 */
+section .data
+   numero1 dd 5
+   numero2 dd 7
+   resultado dd 0
+    
+section .text
+    global _start
+    
+_start:
+    ;se carga el valor de numero1 utilizando direccionamiento 
+    mov eax, [ebx + esi + numero1]
+    ;suma el valor de numero2 en eax
+    add eax, [numero2]
+    ;almacena el resultado en la direccion
+    mov [resultado], eax
+     
+     ;preparar la llamada al sistema exit 
+    mov eax, 1 
+    ;codigo de retorno 0
+    xor ebx, ebx
+    int 0x80 ;llamada al sistema para salir
+
+;Funcionamiento: En este modo se suma el valor de numero1 al resultado de ebx + esi y el valor resultante se carga en eax.
